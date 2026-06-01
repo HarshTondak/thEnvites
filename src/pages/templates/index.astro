@@ -1,0 +1,173 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { LayoutTemplate, Zap, Building2 } from 'lucide-react';
+---
+
+<Layout title="thEnvites - Invitation Template Collection">
+  <div class="flex flex-col">
+    {/* Hero Section */}
+    <section class="px-5 md:px-margin-desktop py-24 md:py-32 w-full max-w-[1440px] mx-auto">
+      <div class="max-w-3xl">
+        <span class="font-mono text-xs text-on-surface-variant mb-6 block uppercase tracking-[0.2em]">
+          [ COLLECTION 01 ]
+        </span>
+        <h1 class="font-headline text-5xl md:text-[80px] font-bold tracking-tight mb-8 leading-[1.1]">
+          Curated Layouts.
+        </h1>
+        <p class="font-body text-lg text-on-surface-variant">
+          Explore our curated selection of deeply optimized invitation templates. Modify typography, inject your event schedule, drop in high-resolution images, and deploy instantly.
+        </p>
+      </div>
+    </section>
+
+    {/* Interactive Template Engine */}
+    <section class="px-5 md:px-margin-desktop py-24 border-t border-border-surgical bg-background">
+      <div class="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+        {/* Template 1: Minimalist Wedding */}
+        <a href="/templates/minimalist-wedding" class="group border border-border-surgical bg-surface-container-low p-8 flex flex-col h-full hover:border-on-surface-variant transition-colors block">
+          <div class="mb-8 flex justify-between items-start">
+            <div>
+              <h3 class="font-headline text-2xl font-bold mb-1">The Minimalist Wedding</h3>
+              <p class="font-mono text-xs text-on-surface-variant uppercase tracking-widest mt-2">
+                SERIF ACCENTS / OFF-WHITE
+              </p>
+            </div>
+            <LayoutTemplate class="w-5 h-5 text-on-surface-variant group-hover:text-on-surface transition-colors" />
+          </div>
+          <div class="flex-grow space-y-6">
+            <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Event Title</span>
+              <p class="font-headline text-2xl">Evelyn & Julian</p>
+            </div>
+            <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Host</span>
+              <p class="font-body text-sm">The Sterling Family</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+                <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Date</span>
+                <p class="font-mono text-xs">09.24.24</p>
+              </div>
+              <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+                <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">RSVP</span>
+                <p class="font-mono text-xs">Required</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 grid grid-cols-3 gap-2 h-20">
+            <div class="bg-neutral-200 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Minimalist Texture"
+                class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
+              />
+            </div>
+            <div class="bg-neutral-200 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Architectural Shadows"
+                class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
+              />
+            </div>
+            <div class="bg-neutral-200 overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Minimalist Floral"
+                class="w-full h-full object-cover grayscale opacity-80 group-hover:opacity-100 transition-opacity"
+              />
+            </div>
+          </div>
+        </a>
+
+        {/* Template 2: Neon Mixer */}
+        <a href="/templates/neon-mixer" class="group border border-border-surgical bg-surface p-8 flex flex-col h-full relative overflow-hidden hover:border-accent-energy transition-colors block">
+          <div class="absolute top-0 right-0 w-32 h-32 bg-accent-energy blur-[100px] opacity-20 transition-opacity group-hover:opacity-40"></div>
+          <div class="mb-8 flex justify-between items-start relative z-10">
+            <div>
+              <h3 class="font-headline text-2xl font-bold mb-1">The Neon Mixer</h3>
+              <p class="font-mono text-xs text-accent-energy uppercase mt-2 tracking-widest">
+                DARK MODE / VIBRANT BORDERS
+              </p>
+            </div>
+            <Zap class="w-5 h-5 text-on-surface-variant group-hover:text-accent-energy transition-colors" />
+          </div>
+          <div class="flex-grow space-y-6 relative z-10">
+            <div class="border-b border-accent-energy pb-2">
+              <span class="font-mono text-[10px] text-accent-energy uppercase block mb-1">Event Title</span>
+              <p class="font-headline text-2xl text-on-surface">Afterhours .04</p>
+            </div>
+            <div class="border-b border-border-surgical pb-2 group-hover:border-accent-energy transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Host</span>
+              <p class="font-body text-sm text-on-surface">Vector Labs</p>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="border-b border-border-surgical pb-2 group-hover:border-accent-energy transition-colors">
+                <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Date</span>
+                <p class="font-mono text-xs text-on-surface">11.12.24</p>
+              </div>
+              <div class="border-b border-border-surgical pb-2 group-hover:border-accent-energy transition-colors">
+                <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">RSVP</span>
+                <p class="font-mono text-xs text-on-surface">Invite Only</p>
+              </div>
+            </div>
+          </div>
+          <div class="mt-8 grid grid-cols-3 gap-2 h-20 relative z-10">
+            <div class="border border-accent-energy overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1514525253161-7a46d19cd819?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Neon Lights"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+              />
+            </div>
+            <div class="border border-border-surgical overflow-hidden bg-surface-container">
+              <img
+                src="https://images.unsplash.com/photo-1563841930606-67e2bce48b78?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80"
+                alt="Neon Texture"
+                class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 mix-blend-luminosity"
+              />
+            </div>
+            <div class="border border-border-surgical overflow-hidden bg-surface-container"></div>
+          </div>
+        </a>
+
+        {/* Template 3: Corporate Gala */}
+        <a href="/templates/corporate-gala" class="group border border-border-surgical bg-surface-container-highest p-8 flex flex-col h-full hover:border-on-surface-variant transition-colors block">
+          <div class="mb-8 flex justify-between items-start">
+            <div>
+              <h3 class="font-headline text-2xl font-bold mb-1">The Corporate Gala</h3>
+              <p class="font-mono text-xs text-on-surface-variant uppercase mt-2 tracking-widest">
+                NAVY SLATE / GEOMETRIC
+              </p>
+            </div>
+            <Building2 class="w-5 h-5 text-on-surface-variant group-hover:text-on-surface transition-colors" />
+          </div>
+          <div class="flex-grow space-y-6">
+            <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Event Title</span>
+              <p class="font-headline text-2xl">Annual Summit</p>
+            </div>
+            <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Host</span>
+              <p class="font-body text-sm">Atlas Global</p>
+            </div>
+            <div class="border-b border-border-surgical pb-2 group-hover:border-on-surface transition-colors">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase block mb-1">Agenda</span>
+              <p class="font-mono text-[10px] leading-relaxed mt-1 text-on-surface">18:00 Reception / 19:30 Dinner / 21:00 Keynote</p>
+            </div>
+          </div>
+          <div class="mt-8 border border-border-surgical p-4 bg-background group-hover:border-on-surface-variant transition-colors">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 bg-on-surface-variant rounded-full flex-shrink-0 flex items-center justify-center overflow-hidden">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=150" alt="CEO" class="w-full h-full object-cover grayscale" />
+              </div>
+              <div>
+                <p class="font-mono text-xs">CEO Welcome</p>
+                <p class="font-mono text-[10px] text-on-surface-variant mt-1 group-hover:text-on-surface transition-colors">Opening Remarks</p>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

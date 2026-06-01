@@ -1,0 +1,251 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="thEnvites - Privacy Policy & Terms of Service">
+  <div class="flex flex-col">
+    {/* Hero Section */}
+    <section class="px-5 md:px-margin-desktop pt-32 pb-16 border-b border-border-surgical">
+      <div class="max-w-[1440px] mx-auto w-full">
+        <span class="font-mono text-xs text-on-surface-variant mb-6 block uppercase tracking-[0.2em]">
+          Legal Framework / v2.4
+        </span>
+        <h1 class="font-headline text-5xl md:text-[80px] font-bold text-on-background max-w-4xl leading-[1.1] tracking-tight">
+          Privacy Policy &amp; Terms of Service.
+        </h1>
+      </div>
+    </section>
+
+    {/* Content Section */}
+    <section class="px-5 md:px-margin-desktop py-24 md:py-32">
+      <div class="max-w-[1440px] mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-16">
+        
+        {/* Sticky Sidebar Navigation */}
+        <aside class="hidden lg:block lg:col-span-3">
+          <div class="sticky top-32 space-y-8">
+            <nav class="flex flex-col gap-4 border-l border-border-surgical">
+              {[
+                { id: "privacy", label: "Privacy Policy" },
+                { id: "terms", label: "Terms of Service" },
+                { id: "cookies", label: "Cookie Policy" },
+                { id: "gdpr", label: "GDPR Compliance" },
+              ].map((item) => (
+                <button
+                  data-section={item.id}
+                  class={`text-left font-mono text-[10px] md:text-xs uppercase tracking-widest pl-4 transition-colors -ml-[1px] border-l-2 sidebar-btn ${
+                    item.id === 'privacy' 
+                      ? 'text-on-surface border-on-surface font-bold' 
+                      : 'text-on-surface-variant hover:text-on-surface border-transparent'
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
+            </nav>
+            <div class="pt-8 border-t border-border-surgical">
+              <p class="font-mono text-[10px] text-on-surface-variant leading-relaxed">
+                LAST UPDATED:<br />NOVEMBER 14, 2024
+              </p>
+            </div>
+          </div>
+        </aside>
+
+        {/* Main Copy */}
+        <div class="lg:col-span-9 space-y-[160px]">
+          {/* Privacy Section */}
+          <article id="privacy" class="space-y-12 scroll-mt-32">
+            <div class="space-y-6">
+              <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-background tracking-tight">
+                01. Privacy Policy
+              </h2>
+              <p class="font-body text-lg text-on-surface-variant max-w-3xl leading-relaxed">
+                At thEnvites, we treat your data with the same architectural precision we apply to our invitations. This policy outlines how we handle personal identifiers in our digital ecosystem.
+              </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+              <div class="space-y-4">
+                <h3 class="font-mono text-xs font-bold uppercase text-on-surface tracking-widest">
+                  Data Collection
+                </h3>
+                <p class="text-on-surface-variant leading-relaxed font-body">
+                  We collect information necessary to provide a premium digital experience. This includes account credentials, invitation recipient lists, and interaction metadata. We do not engage in the sale of personal data to third-party brokers.
+                </p>
+              </div>
+              <div class="space-y-4">
+                <h3 class="font-mono text-xs font-bold uppercase text-on-surface tracking-widest">
+                  Usage Logic
+                </h3>
+                <p class="text-on-surface-variant leading-relaxed font-body">
+                  Your data is utilized strictly for service fulfillment: processing RSVP transitions, maintaining event security, and optimizing the delivery of digital assets. Processing occurs within secure, encrypted environments.
+                </p>
+              </div>
+            </div>
+
+            <div class="p-8 border border-border-surgical bg-surface-container-low mt-8">
+              <h4 class="font-mono text-[10px] font-bold uppercase text-on-surface mb-4 tracking-widest">
+                Encryption Standard
+              </h4>
+              <p class="text-on-surface-variant font-body">
+                All data in transit and at rest is protected using AES-256 encryption. Our infrastructure undergoes quarterly security audits to ensure compliance with global architectural standards for digital safety.
+              </p>
+            </div>
+          </article>
+
+          {/* Terms Section */}
+          <article id="terms" class="space-y-12 scroll-mt-32">
+            <div class="space-y-6">
+              <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-background tracking-tight">
+                02. Terms of Service
+              </h2>
+              <p class="font-body text-lg text-on-surface-variant max-w-3xl leading-relaxed">
+                By accessing thEnvites, you agree to a standard of conduct that preserves the integrity of our platform and the exclusivity of our community.
+              </p>
+            </div>
+
+            <div class="space-y-12">
+              <div class="border-b border-border-surgical pb-8">
+                <div class="flex flex-col md:flex-row gap-8">
+                  <span class="font-mono text-xs md:text-sm font-bold text-on-surface pt-1">2.1</span>
+                  <div class="space-y-3">
+                    <h4 class="font-headline text-2xl font-bold text-on-surface">
+                      Licensing and IP
+                    </h4>
+                    <p class="text-on-surface-variant leading-relaxed">
+                      The designs, codebases, and visual aesthetics of thEnvites are protected intellectual property. Users are granted a non-exclusive, revocable license to utilize our templates for personal or approved commercial events only.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border-b border-border-surgical pb-8">
+                <div class="flex flex-col md:flex-row gap-8">
+                  <span class="font-mono text-xs md:text-sm font-bold text-on-surface pt-1">2.2</span>
+                  <div class="space-y-3">
+                    <h4 class="font-headline text-2xl font-bold text-on-surface">
+                      Acceptable Use
+                    </h4>
+                    <p class="text-on-surface-variant leading-relaxed">
+                      Any attempt to reverse-engineer our layout engine, scrape invitation data, or utilize the platform for unsolicited mass-messaging (SPAM) will result in immediate and permanent account termination without refund.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="border-b border-border-surgical pb-8">
+                <div class="flex flex-col md:flex-row gap-8">
+                  <span class="font-mono text-xs md:text-sm font-bold text-on-surface pt-1">2.3</span>
+                  <div class="space-y-3">
+                    <h4 class="font-headline text-2xl font-bold text-on-surface">
+                      Liability
+                    </h4>
+                    <p class="text-on-surface-variant leading-relaxed">
+                      thEnvites provides its service "as is." While we strive for 99.9% uptime, we are not liable for any logistical disruptions caused by network failures or third-party email providers.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </article>
+
+          {/* Cookie Policy Section */}
+          <article id="cookies" class="space-y-12 scroll-mt-32">
+            <div class="space-y-6">
+              <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-background tracking-tight">
+                03. Cookie Policy
+              </h2>
+              <p class="font-body text-lg text-on-surface-variant max-w-3xl leading-relaxed">
+                We use minimal, functional cookies to maintain session states and user preferences. We do not use persistent tracking cookies for cross-site advertising.
+              </p>
+            </div>
+          </article>
+
+          {/* GDPR Section */}
+          <article id="gdpr" class="space-y-12 scroll-mt-32">
+            <div class="space-y-6">
+              <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-background tracking-tight">
+                04. GDPR Compliance
+              </h2>
+              <p class="font-body text-lg text-on-surface-variant max-w-3xl leading-relaxed">
+                European Union residents maintain the right to data portability and erasure. To execute a "right to be forgotten" request, authenticate your account and contact our legal compliance team.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    {/* Support Section */}
+    <section class="px-5 md:px-margin-desktop py-24 md:py-32 bg-surface-container-lowest border-t border-border-surgical text-center">
+      <div class="max-w-2xl mx-auto space-y-8">
+        <h2 class="font-headline text-4xl md:text-5xl font-bold text-on-background tracking-tight">
+          Need Clarification?
+        </h2>
+        <p class="text-on-surface-variant font-body text-lg leading-relaxed">
+          If you have questions regarding our legal framework or how we manage your event data, our compliance team is available for direct consultation.
+        </p>
+        <div class="pt-8">
+          <a
+            href="mailto:legal@thenvites.com"
+            class="inline-block border border-on-surface px-12 py-4 font-mono text-xs font-bold uppercase tracking-[0.3em] hover:bg-on-surface hover:text-background transition-all duration-300"
+          >
+            Contact Legal Dept.
+          </a>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.sidebar-btn');
+    const sections = ['privacy', 'terms', 'cookies', 'gdpr'];
+
+    const setActive = (activeId: string) => {
+      buttons.forEach((btn) => {
+        const sectionId = btn.getAttribute('data-section');
+        if (sectionId === activeId) {
+          btn.classList.remove('text-on-surface-variant', 'hover:text-on-surface', 'border-transparent');
+          btn.classList.add('text-on-surface', 'border-on-surface', 'font-bold');
+        } else {
+          btn.classList.remove('text-on-surface', 'border-on-surface', 'font-bold');
+          btn.classList.add('text-on-surface-variant', 'hover:text-on-surface', 'border-transparent');
+        }
+      });
+    };
+
+    // Scrollspy logic
+    const handleScroll = () => {
+      let current = sections[0];
+      for (const section of sections) {
+        const el = document.getElementById(section);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          // Offset to trigger earlier during scrolling
+          if (rect.top <= 200) {
+            current = section;
+          }
+        }
+      }
+      setActive(current);
+    };
+
+    // Scroll to section logic
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const id = btn.getAttribute('data-section');
+        if (id) {
+          const el = document.getElementById(id);
+          if (el) {
+            const offset = 100;
+            const top = el.getBoundingClientRect().top + window.scrollY - offset;
+            window.scrollTo({ top, behavior: 'smooth' });
+          }
+        }
+      });
+    });
+
+    window.addEventListener('scroll', handleScroll);
+    // Initial call
+    handleScroll();
+  </script>
+</Layout>

@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import ContactForm from '../components/ContactForm';
+---
+
+<Layout title="thEnvites - Contact Our Design Studio">
+  <div class="min-h-[80vh] flex flex-col pt-24 pb-section-gap px-5 md:px-margin-desktop max-w-[1440px] mx-auto w-full">
+    {/* Hero Header */}
+    <div class="w-full max-w-4xl mx-auto mb-12 text-center md:text-left gap-8">
+      <span class="font-mono text-xs text-on-surface-variant uppercase tracking-[0.2em] mb-4 block">
+        Inquiry Phase
+      </span>
+      <h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tight text-on-background leading-none mb-8">
+        Let’s define your atmosphere.
+      </h1>
+    </div>
+
+    <ContactForm client:load />
+  </div>
+</Layout>

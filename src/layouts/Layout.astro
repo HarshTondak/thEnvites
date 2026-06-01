@@ -1,0 +1,59 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../index.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = "thEnvites - Premium Digital Invitations",
+  description = "Deploy beautiful, premium invitation templates for weddings, milestone parties, and elite mixers with thEnvites, the invites platform for modern hosts."
+} = Astro.props;
+
+const canonicalURL = new URL(Astro.url.pathname, Astro.site || "https://thenvites.com");
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuB6NxIK5vneFj7Y8ENBCtAYm0bx_WW4pFh5DtA5cc3fhElxi-sauk_Nq4fJOxAB6y6kA7_mwAdB0uTlIwULnUNGrQxRRuypmwdFl1l3kzG4TJGgea8whys0i6xH2UY257g5IsfgDnjVPUX9MUnin9PGyVGC7qQ-7qnh7irem43C7KboR9TqBN-aMaeM8dDQaxK43D5g0J4nrbZQ7iUe-_PEg4DeKwt4vDk7b32CHv9Pa72lgvS2XxYUCdpSSGGme6i875Y4Dy0DFBK3" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content="https://lh3.googleusercontent.com/aida-public/AB6AXuB6NxIK5vneFj7Y8ENBCtAYm0bx_WW4pFh5DtA5cc3fhElxi-sauk_Nq4fJOxAB6y6kA7_mwAdB0uTlIwULnUNGrQxRRuypmwdFl1l3kzG4TJGgea8whys0i6xH2UY257g5IsfgDnjVPUX9MUnin9PGyVGC7qQ-7qnh7irem43C7KboR9TqBN-aMaeM8dDQaxK43D5g0J4nrbZQ7iUe-_PEg4DeKwt4vDk7b32CHv9Pa72lgvS2XxYUCdpSSGGme6i875Y4Dy0DFBK3" />
+
+    <!-- Favicon / Brand Assets -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <meta name="generator" content={Astro.generator} />
+  </head>
+  <body class="bg-background text-on-background font-body antialiased">
+    <div class="min-h-screen flex flex-col">
+      <Header />
+      <main class="flex-grow">
+        <slot />
+      </main>
+      <Footer />
+    </div>
+  </body>
+</html>

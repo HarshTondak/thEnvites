@@ -1,0 +1,146 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Plus, Minus } from 'lucide-react';
+
+const faqs = [
+  {
+    question: "How do I make a digital invitation using thEnvites?",
+    answer:
+      "Creating your event hub is completely seamless. Start by launching our free invitation maker on our homepage, select one of our premium, pre-built invitation templates that fits your vibe (such as a wedding, party, or corporate layout), and input your event details. You can customize the typography, drop in up to three high-resolution images, and publish instantly to generate a unique link for your guests.",
+  },
+  {
+    question: "What should be included in a wedding invitation?",
+    answer:
+      "An effective wedding invitation needs to balance elegance with absolute clarity. It should explicitly state the names of the couple, the hosts (if applicable), the exact date and time, the full address of the venue, and clear RSVP instructions. With the invites framework, we also include a dedicated section for multi-day itineraries (like cocktails or receptions) so your guests have a single, clean source of truth.",
+  },
+  {
+    question: "How do I make an invitation feel premium without physical printing?",
+    answer:
+      "The secret lies in typography, layout hierarchy, and white space. Instead of using cluttered, animated graphics that look cheap, our platform utilizes a Vercel-inspired, minimalist aesthetic. By focusing on razor-sharp borders, editorial font layouts, and high-quality image insertion points, your digital invitation feels like an elite, custom-built website rather than a generic card.",
+  },
+  {
+    question: "What does RSVP mean on an invitation, and how does it work here?",
+    answer:
+      'RSVP stands for "Répondez s\'il vous plaît," which translates to "Please reply." On a traditional paper card, guests have to mail a physical response back. On our digital platform, it transforms into an interactive, real-time counter. Guests simply click their status on your custom URL, allowing you to track your exact headcount and guest validations instantly from your dashboard.',
+  },
+  {
+    question: "Whose name goes first on a wedding invitation?",
+    answer:
+      "Traditionally, the bride’s name precedes the groom’s name on a formal wedding invitation. If the wedding is hosted or funded by specific parents, their names are typically placed at the very top of the layout. However, our modern wedding invitation templates offer completely flexible text zones, allowing you to format the naming order and host callouts exactly how it fits your family's dynamic.",
+  },
+  {
+    question: "Can I add photos to the pre-built templates?",
+    answer:
+      "Yes. Every single layout inside our invitation maker features designated, beautifully framed image insertion points. To maintain a clean, ultra-premium look and keep the page loading at lightning speed, we enforce a strict rule of a maximum of 3 image uploads per template. This lets you personalize your invite with your favorite engagement or party shots without cluttering the design.",
+  },
+  {
+    question: "Is this truly a free invitation maker?",
+    answer:
+      "Yes, our core tier is completely free. You can select from our generic pre-built layouts, customize your text, insert your images, and deploy a live link to send to your guests without paying a dime.",
+  },
+  {
+    question: "What if I need a completely custom design that isn't in the templates?",
+    answer:
+      "If your milestone event requires absolute architectural freedom, a completely unique layout, or specific custom integrations, we’ve got you covered. You can bypass our standard template engine and contact our design collective directly through our Contact Us page. Just fill out the form with your event scope, and we will build a bespoke digital footprint from scratch for you.",
+  },
+  {
+    question: "How do I share my digital invitation with my guests?",
+    answer:
+      "Once you hit publish inside our editor, the platform generates a pristine, shortened custom URL (e.g., thenvites.com/w/your-event). You can copy this link and share it instantly across any platform—whether that’s WhatsApp, email, Instagram DMs, or SMS. It is fully optimized to display a beautiful preview snippet when pasted into chat apps.",
+  },
+  {
+    question: "Can I edit the details after I have already sent the link to guests?",
+    answer:
+      "Absolutely. One of the biggest flaws of paper card printing is that mistakes are permanent. With our digital system, if your venue, timing, or RSVP deadline changes, you can log back into the platform, update the content, and save. The live link updates instantly, ensuring your guests never see outdated information.",
+  },
+];
+---
+
+<Layout title="thEnvites - Frequently Asked Questions">
+  <div class="min-h-[80vh] flex flex-col py-24 md:py-32 px-5 md:px-margin-desktop max-w-4xl mx-auto w-full">
+    <div class="mb-16">
+      <span class="font-mono text-xs text-on-surface-variant uppercase tracking-[0.2em] mb-4 block">
+        [ SUPPORT DIRECTORY ]
+      </span>
+      <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-background mb-6">
+        Frequently Asked Questions.
+      </h1>
+      <p class="font-body text-lg text-on-surface-variant">
+        Everything you need to know about crafting your digital footprint with thEnvites.
+      </p>
+    </div>
+
+    <div class="flex flex-col border-t border-border-surgical">
+      {faqs.map((faq, index) => (
+        <div class="border-b border-border-surgical">
+          <button
+            class="w-full py-8 flex justify-between items-center text-left focus:outline-none group faq-btn"
+          >
+            <h3 class="font-headline text-lg md:text-xl font-medium text-on-surface group-hover:text-on-background transition-colors max-w-[85%]">
+              {faq.question}
+            </h3>
+            <span class="text-on-surface-variant group-hover:text-on-background transition-colors flex-shrink-0 ml-4 relative w-5 h-5">
+              <Plus class="w-5 h-5 plus-icon absolute top-0 left-0 transition-all duration-300" />
+              <Minus class="w-5 h-5 minus-icon absolute top-0 left-0 opacity-0 scale-75 transition-all duration-300" />
+            </span>
+          </button>
+          <div
+            class="faq-content overflow-hidden max-h-0 opacity-0 transition-all duration-300 ease-in-out"
+          >
+            <p class="font-body text-base text-on-surface-variant leading-relaxed pb-8">
+              {faq.answer}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.faq-btn');
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const content = btn.nextElementSibling as HTMLElement;
+        const plusIcon = btn.querySelector('.plus-icon') as HTMLElement;
+        const minusIcon = btn.querySelector('.minus-icon') as HTMLElement;
+
+        const isOpened = btn.classList.contains('active');
+
+        // Close all other accordions
+        buttons.forEach((otherBtn) => {
+          if (otherBtn !== btn && otherBtn.classList.contains('active')) {
+            otherBtn.classList.remove('active');
+            const otherContent = otherBtn.nextElementSibling as HTMLElement;
+            const otherPlus = otherBtn.querySelector('.plus-icon') as HTMLElement;
+            const otherMinus = otherBtn.querySelector('.minus-icon') as HTMLElement;
+
+            otherContent.style.maxHeight = '0px';
+            otherContent.style.opacity = '0';
+            otherPlus.classList.remove('opacity-0', 'scale-75');
+            otherMinus.classList.add('opacity-0', 'scale-75');
+            otherMinus.classList.remove('opacity-100', 'scale-100');
+          }
+        });
+
+        if (!isOpened) {
+          btn.classList.add('active');
+          content.style.maxHeight = `${content.scrollHeight}px`;
+          content.style.opacity = '1';
+
+          plusIcon.classList.add('opacity-0', 'scale-75');
+          minusIcon.classList.remove('opacity-0', 'scale-75');
+          minusIcon.classList.add('opacity-100', 'scale-100');
+        } else {
+          btn.classList.remove('active');
+          content.style.maxHeight = '0px';
+          content.style.opacity = '0';
+
+          plusIcon.classList.remove('opacity-0', 'scale-75');
+          minusIcon.classList.add('opacity-0', 'scale-75');
+          minusIcon.classList.remove('opacity-100', 'scale-100');
+        }
+      });
+    });
+  </script>
+</Layout>

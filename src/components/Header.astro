@@ -1,0 +1,51 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, "");
+const isActive = (path: string) => {
+  const normalizedPath = path.replace(/\/$/, "");
+  return pathname === normalizedPath;
+};
+---
+
+<header class="sticky top-0 z-50 flex justify-between items-center w-full px-5 md:px-margin-desktop py-4 bg-background border-b border-border-surgical">
+  <div class="font-headline text-2xl font-bold tracking-tighter text-on-background">
+    <a href="/">thEnvites</a>
+  </div>
+  <nav class="hidden md:flex items-center gap-8">
+    <a
+      href="/"
+      class={`font-mono text-xs uppercase tracking-widest ${
+        isActive("/")
+          ? "text-on-surface font-bold border-b border-on-surface py-1"
+          : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+      }`}
+    >
+      Home
+    </a>
+    <a
+      href="/about"
+      class={`font-mono text-xs uppercase tracking-widest ${
+        isActive("/about")
+          ? "text-on-surface font-bold border-b border-on-surface py-1"
+          : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+      }`}
+    >
+      About
+    </a>
+    <a
+      href="/contact"
+      class={`font-mono text-xs uppercase tracking-widest ${
+        isActive("/contact")
+          ? "text-on-surface font-bold border-b border-on-surface py-1"
+          : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+      }`}
+    >
+      Contact
+    </a>
+  </nav>
+  <a
+    href="/contact"
+    class="bg-on-background text-background px-6 py-2 font-mono text-xs uppercase tracking-widest font-bold hover:bg-background hover:text-on-background border border-on-background transition-all duration-200 active:scale-95"
+  >
+    Get Started
+  </a>
+</header>
