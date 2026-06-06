@@ -16,7 +16,9 @@ export default function ContactForm() {
         {/* Step 1: Identity */}
         <div
           className={`transition-all duration-500 ${
-            step === 1 ? "opacity-100 relative" : "opacity-0 absolute pointer-events-none translate-y-10"
+            step === 1
+              ? "opacity-100 relative"
+              : "opacity-0 absolute pointer-events-none translate-y-10"
           }`}
         >
           <div className="flex items-center gap-4 mb-12">
@@ -67,7 +69,9 @@ export default function ContactForm() {
         {/* Step 2: Architecture */}
         <div
           className={`transition-all duration-500 ${
-            step === 2 ? "opacity-100 relative" : "opacity-0 absolute pointer-events-none translate-y-10"
+            step === 2
+              ? "opacity-100 relative"
+              : "opacity-0 absolute pointer-events-none translate-y-10"
           }`}
         >
           <div className="flex items-center gap-4 mb-12">
@@ -83,10 +87,18 @@ export default function ContactForm() {
                 Event Type
               </label>
               <select className="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-4 font-body text-lg text-on-background appearance-none cursor-pointer">
-                <option value="Wedding" className="bg-surface">Wedding</option>
-                <option value="Corporate" className="bg-surface">Corporate Gala</option>
-                <option value="Private Party" className="bg-surface">Private Salon</option>
-                <option value="Other" className="bg-surface">Custom Instance</option>
+                <option value="Wedding" className="bg-surface">
+                  Wedding
+                </option>
+                <option value="Corporate" className="bg-surface">
+                  Corporate Gala
+                </option>
+                <option value="Private Party" className="bg-surface">
+                  Private Salon
+                </option>
+                <option value="Other" className="bg-surface">
+                  Custom Instance
+                </option>
               </select>
             </div>
 
@@ -125,7 +137,9 @@ export default function ContactForm() {
         {/* Step 3: Requirements */}
         <div
           className={`transition-all duration-500 ${
-            step === 3 ? "opacity-100 relative" : "opacity-0 absolute pointer-events-none translate-y-10"
+            step === 3
+              ? "opacity-100 relative"
+              : "opacity-0 absolute pointer-events-none translate-y-10"
           }`}
         >
           <div className="flex items-center gap-4 mb-12">
@@ -170,7 +184,9 @@ export default function ContactForm() {
         {/* Success Screen */}
         <div
           className={`transition-all duration-500 flex flex-col items-center justify-center text-center py-12 ${
-            step === 4 ? "opacity-100 relative" : "opacity-0 absolute pointer-events-none translate-y-10"
+            step === 4
+              ? "opacity-100 relative"
+              : "opacity-0 absolute pointer-events-none translate-y-10"
           }`}
         >
           <CheckCircle2 className="w-16 h-16 text-on-background mb-8" />
@@ -178,7 +194,8 @@ export default function ContactForm() {
             Transmission Received
           </h2>
           <p className="font-body text-lg text-on-surface-variant max-w-md mx-auto">
-            Your design request has been logged. Our curators will review the architectural alignment and contact you within 24 standard hours.
+            Your design request has been logged. Our curators will review the
+            architectural alignment and contact you within 24 standard hours.
           </p>
           <button
             type="button"

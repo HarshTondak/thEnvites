@@ -1,8 +1,31 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import MinimalistWeddingEditor from '../../components/templates/MinimalistWeddingEditor';
+import { getSession } from '../../lib/auth';
+import dbConnect from '../../lib/db';
+import Invite from '../../models/Invite';
+
+export const prerender = false;
+
+const session = getSession(Astro.cookies);
+if (!session) {
+  return Astro.redirect('/login');
+}
+
+const id = Astro.url.searchParams.get('id');
+let initialData = null;
+
+if (id) {
+  await dbConnect();
+  const invite = await Invite.findById(id);
+  if (invite && invite.creatorId.toString() === session.userId) {
+    initialData = JSON.parse(JSON.stringify(invite));
+  } else {
+    return Astro.redirect('/dashboard');
+  }
+}
 ---
 
-<Layout title="thEnvites - Edit Minimalist Wedding Envite">
-  <MinimalistWeddingEditor client:load />
+<Layout title="thEnvites - Configure Minimalist Wedding Envite">
+  <MinimalistWeddingEditor client:load initialData={initialData} />
 </Layout>

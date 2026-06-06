@@ -1,0 +1,491 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import dbConnect from '../../lib/db';
+import Invite from '../../models/Invite';
+import { Calendar, MapPin, Award, Check, Zap, Users, ShieldAlert } from 'lucide-react';
+
+export const prerender = false;
+
+const { id } = Astro.params;
+
+await dbConnect();
+let invite = null;
+try {
+  invite = await Invite.findById(id);
+} catch (e) {
+  // Invalid ObjectId
+}
+
+if (!invite) {
+  return Astro.redirect('/404');
+}
+
+const isWedding = invite.templateId === 'minimalist-wedding';
+const isMixer = invite.templateId === 'neon-mixer';
+const isGala = invite.templateId === 'corporate-gala';
+
+const pageTitle = `${invite.title} - Digital Invitation`;
+---
+
+<Layout title={pageTitle}>
+  
+  {isWedding && (
+    <div class="flex flex-col min-h-screen bg-background">
+      <div class="grow max-w-360 mx-auto w-full px-5 md:px-margin-desktop py-24 md:py-32 flex justify-center">
+        <div class="w-full max-w-3xl border border-border-surgical bg-surface-container-low p-8 md:p-24 flex flex-col hover:border-on-surface-variant transition-colors group/wrapper">
+          
+          {/* Header */}
+          <div class="mb-16 flex justify-between items-start opacity-70">
+            <div>
+              <p class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">
+                Invitation Event
+              </p>
+            </div>
+            <span class="font-serif italic text-lg leading-none">i</span>
+          </div>
+          
+          {/* Name */}
+          <div class="text-center mb-16 space-y-4">
+             <h1 class="font-headline text-5xl md:text-7xl text-center text-on-background">{invite.title}</h1>
+             <p class="font-mono text-xs uppercase tracking-widest text-on-surface-variant">Are getting married</p>
+          </div>
+
+          {/* Hero Photo */}
+          <div class="w-full aspect-4/5 md:aspect-3/2 bg-neutral-200 overflow-hidden mb-24 border border-border-surgical">
+            <img
+              src={invite.images?.[0] || "https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&q=80&w=1200"}
+              alt="Couple"
+              class="w-full h-full object-cover grayscale opacity-90"
+            />
+          </div>
+
+          {/* Host Message */}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-24">
+            <div class="space-y-6">
+              <p class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant">
+                {invite.customFields?.get("subHostText") || "Together with their families"}
+              </p>
+              <h3 class="font-headline text-3xl text-on-surface">{invite.hostName}</h3>
+              <p class="font-body text-base leading-relaxed text-on-surface-variant whitespace-pre-line">
+                {invite.customFields?.get("bodyText") || "Joyfully invite you to celebrate the marriage of their children."}
+              </p>
+            </div>
+            <div class="aspect-square bg-neutral-200 overflow-hidden border border-border-surgical">
+              <img
+                src={invite.images?.[1] || "https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80&w=800"}
+                alt="Details"
+                class="w-full h-full object-cover grayscale opacity-90"
+              />
+            </div>
+          </div>
+
+          {/* Dates & Locations */}
+          <div class="border-y border-border-surgical py-16 mb-24 relative">
+             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 text-center md:text-left">
+                <div>
+                   <span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-4">When</span>
+                   <p class="font-headline text-2xl text-on-surface">{invite.eventDate}</p>
+                   <p class="font-body text-base mt-2 text-on-surface-variant">{invite.eventTime}</p>
+                </div>
+                <div>
+                   <span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-4">Where</span>
+                   <p class="font-headline text-2xl text-on-surface">{invite.locationName}</p>
+                   <p class="font-body text-base mt-2 text-on-surface-variant whitespace-pre-line">{invite.locationAddress}</p>
+                </div>
+             </div>
+             <div class="md:hidden absolute top-1/2 left-0 w-full h-px bg-border-surgical"></div>
+             <div class="hidden md:block absolute top-[10%] left-1/2 w-px h-[80%] bg-border-surgical"></div>
+          </div>
+
+          {/* Details */}
+          <div class="text-center mb-24 max-w-sm mx-auto space-y-8">
+              <div>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Dress Code</span>
+                <p class="font-headline text-xl text-on-surface">{invite.dressCode}</p>
+              </div>
+              <div class="h-px w-12 bg-border-surgical mx-auto"></div>
+              <div>
+                <span class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">RSVP By</span>
+                <p class="font-headline text-xl text-on-surface">{invite.rsvpDeadline}</p>
+              </div>
+          </div>
+
+          {/* Last Photo */}
+          <div class="w-full aspect-21/9 bg-neutral-200 overflow-hidden border border-border-surgical mb-24">
+             <img
+                src={invite.images?.[2] || "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?auto=format&fit=crop&q=80&w=1200"}
+                alt="Venue"
+                class="w-full h-full object-cover grayscale opacity-90"
+              />
+          </div>
+
+          {/* Dynamic RSVP Form Widget */}
+          <div id="rsvpWidget" class="border border-border-surgical p-8 md:p-12 bg-surface-container-lowest">
+            <div id="rsvpFormContainer">
+              <h3 class="font-headline text-2xl font-bold mb-6 text-center">Kindly Respond</h3>
+              <form id="rsvpForm" class="space-y-6">
+                <div>
+                  <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Your Full Name</label>
+                  <input type="text" name="guestName" required placeholder="Guest Name" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-base text-on-background" />
+                </div>
+                
+                <div class="grid grid-cols-2 gap-4">
+                  <div>
+                    <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Attendance</label>
+                    <select name="status" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-sm text-on-background">
+                      <option value="attending">Accepts with Joy</option>
+                      <option value="declined">Regretfully Declines</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Total Guest Count</label>
+                    <input type="number" name="guestCount" value="1" min="1" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-mono text-sm text-on-background" />
+                  </div>
+                </div>
+
+                <div>
+                  <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Special Notes / Dietary Requests</label>
+                  <textarea name="notes" placeholder="Optional notes..." class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-sm text-on-background resize-none h-12"></textarea>
+                </div>
+
+                <div id="rsvpError" class="text-xs text-red-500 font-mono hidden"></div>
+
+                <button type="submit" class="w-full bg-on-background text-background py-4 font-mono text-xs font-bold uppercase tracking-widest hover:invert transition-all cursor-pointer">
+                  Submit RSVP Response
+                </button>
+              </form>
+            </div>
+            
+            <div id="rsvpSuccessContainer" class="hidden text-center py-8 space-y-4">
+              <Check className="w-12 h-12 text-on-background mx-auto" />
+              <h4 class="font-headline text-2xl font-bold">Response Deployed</h4>
+              <p class="font-body text-sm text-on-surface-variant max-w-sm mx-auto">
+                Thank you. Your response has been securely transmitted to the hosts.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  )}
+
+  {isMixer && (
+    <div class="flex flex-col min-h-screen bg-[#0a0a0a] text-white">
+      <div class="grow max-w-360 mx-auto w-full px-5 md:px-margin-desktop py-24 md:py-32 flex justify-center">
+        <div class="w-full max-w-2xl border border-[#222] bg-[#111] p-0 flex flex-col relative overflow-hidden group/wrapper shadow-2xl">
+          <div class="absolute top-[10%] right-0 w-96 h-96 bg-accent-energy blur-[150px] opacity-[0.15] pointer-events-none"></div>
+
+          {/* Top Wide Poster Image */}
+          <div class="w-full h-100 bg-[#222] overflow-hidden relative border-b border-[#222]">
+            <img
+              src={invite.images?.[0] || "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&q=80&w=1200"}
+              alt="Club"
+              class="w-full h-full object-cover opacity-60 mix-blend-screen"
+            />
+            <div class="absolute inset-0 bg-accent-energy/20 mix-blend-overlay"></div>
+            
+            {/* Title Overlay */}
+            <div class="absolute bottom-8 left-8 right-8">
+               <h1 class="font-headline text-5xl md:text-6xl font-bold tracking-tighter text-white uppercase drop-shadow-[0_0_15px_rgba(212,175,55,0.5)]">
+                 {invite.title}
+               </h1>
+            </div>
+          </div>
+          
+          <div class="p-8 md:p-12 relative z-10 text-white">
+            <div class="mb-12 flex justify-between items-start opacity-70">
+              <p class="font-mono text-[10px] text-accent-energy uppercase tracking-widest border border-accent-energy/30 px-3 py-1 rounded-full">
+                DARK MODE / NEON MIXER
+              </p>
+              <Zap className="w-5 h-5 text-accent-energy" />
+            </div>
+
+            <div class="space-y-12">
+               {/* Hosted By */}
+               <div class="border-l-2 border-accent-energy pl-6 py-2">
+                 <span class="font-mono text-[10px] text-[#aaa] uppercase tracking-widest block mb-1">Hosted By</span>
+                 <p class="font-mono text-sm tracking-widest text-white uppercase">{invite.hostName}</p>
+               </div>
+
+               {/* Grid: When & Where */}
+               <div class="grid grid-cols-1 md:grid-cols-2 gap-8 border border-[#333] bg-[#0a0a0a] p-8 relative overflow-hidden group/grid">
+                  <div>
+                    <span class="font-mono text-[10px] text-accent-energy uppercase tracking-widest block mb-4">Time Syntax</span>
+                    <p class="font-headline text-2xl text-white mb-1">{invite.eventDate}</p>
+                    <p class="font-mono text-xs text-[#aaa] uppercase">{invite.eventTime}</p>
+                  </div>
+                  <div>
+                    <span class="font-mono text-[10px] text-accent-energy uppercase tracking-widest block mb-4">Coordinates</span>
+                    <p class="font-headline text-2xl text-white mb-1">{invite.locationName}</p>
+                    <p class="font-mono text-xs text-[#aaa] uppercase whitespace-pre-line">{invite.locationAddress}</p>
+                  </div>
+               </div>
+
+               {/* Lineup / Guest List */}
+               {invite.customFields?.get("lineup") && (
+                 <div class="pt-8 border-t border-[#222]">
+                    <span class="font-mono text-[10px] uppercase tracking-widest block mb-8 text-center text-accent-energy">Sonic Architecture</span>
+                    <div class="space-y-4">
+                      {(invite.customFields.get("lineup") as any[]).map((artist: any) => (
+                        <div class="flex justify-between items-center p-3 border-b border-[#222]">
+                          <span class="font-headline text-xl text-white uppercase">{artist.name}</span>
+                          <span class="font-mono text-sm text-[#aaa]">{artist.time}</span>
+                        </div>
+                      ))}
+                    </div>
+                 </div>
+               )}
+               
+               <div class="text-center pt-12 border-t border-[#222]">
+                  <p class="font-mono text-xs text-[#aaa] uppercase tracking-widest mb-4">Strict Capacity. RSVP Required.</p>
+                  <div class="inline-block border border-accent-energy p-1 px-4">
+                     <span class="font-headline tracking-widest text-accent-energy text-xl uppercase block py-2">{invite.dressCode || 'ACCESS CODE REQUIRED'}</span>
+                  </div>
+               </div>
+
+               {/* Dynamic RSVP Form Widget */}
+               <div id="rsvpWidget" class="border border-[#222] p-8 bg-[#0a0a0a]">
+                 <div id="rsvpFormContainer">
+                   <h3 class="font-headline text-xl font-bold mb-6 text-center text-white">Guest Validation</h3>
+                   <form id="rsvpForm" class="space-y-6">
+                     <div>
+                       <label class="font-mono text-[10px] uppercase tracking-widest text-[#aaa] block mb-2">Guest Identity</label>
+                       <input type="text" name="guestName" required placeholder="Enter Full Name" class="w-full bg-transparent border-b border-[#333] focus:border-accent-energy outline-none py-2 font-body text-base text-white placeholder:text-[#333]" />
+                     </div>
+                     
+                     <div class="grid grid-cols-2 gap-4">
+                       <div>
+                         <label class="font-mono text-[10px] uppercase tracking-widest text-[#aaa] block mb-2">Response</label>
+                         <select name="status" class="w-full bg-[#111] border-b border-[#333] focus:border-accent-energy outline-none py-2 font-body text-sm text-white">
+                           <option value="attending" class="bg-[#111]">Attending</option>
+                           <option value="declined" class="bg-[#111]">Declining</option>
+                         </select>
+                       </div>
+                       <div>
+                         <label class="font-mono text-[10px] uppercase tracking-widest text-[#aaa] block mb-2">Size</label>
+                         <input type="number" name="guestCount" value="1" min="1" class="w-full bg-transparent border-b border-[#333] focus:border-accent-energy outline-none py-2 font-mono text-sm text-white" />
+                       </div>
+                     </div>
+
+                     <div>
+                       <label class="font-mono text-[10px] uppercase tracking-widest text-[#aaa] block mb-2">Requests / Security Clearance</label>
+                       <textarea name="notes" placeholder="Notes for security..." class="w-full bg-transparent border-b border-[#333] focus:border-accent-energy outline-none py-2 font-body text-sm text-white resize-none h-12 placeholder:text-[#333]"></textarea>
+                     </div>
+
+                     <div id="rsvpError" class="text-xs text-red-500 font-mono hidden"></div>
+
+                     <button type="submit" class="w-full bg-accent-energy text-black py-4 font-mono text-xs font-bold uppercase tracking-widest hover:bg-white transition-all cursor-pointer">
+                       Transmit Credentials
+                     </button>
+                   </form>
+                 </div>
+                 
+                 <div id="rsvpSuccessContainer" class="hidden text-center py-8 space-y-4">
+                   <Check className="w-12 h-12 text-accent-energy mx-auto" />
+                   <h4 class="font-headline text-xl font-bold text-white">Transmission Authenticated</h4>
+                   <p class="font-body text-sm text-[#aaa] max-w-sm mx-auto">
+                     Guest credentials saved. Access code omega verified.
+                   </p>
+                 </div>
+               </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  {isGala && (
+    <div class="flex flex-col min-h-screen bg-background">
+      <div class="grow max-w-360 mx-auto w-full px-5 md:px-margin-desktop py-24 md:py-32 flex justify-center">
+        <div class="w-full max-w-4xl bg-surface-container-low shadow-sm border border-border-surgical flex flex-col hover:border-on-surface-variant transition-colors group/wrapper">
+          
+          {/* Header */}
+          <div class="flex justify-between items-center p-8 border-b border-border-surgical">
+            <span class="font-mono text-xs font-bold uppercase tracking-[0.3em] text-on-surface">
+              {invite.hostName}
+            </span>
+            <div class="text-right">
+              <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest">
+                Gala Event footprint
+              </span>
+            </div>
+          </div>
+
+          <div class="p-8 md:p-16">
+            {/* Title & Description */}
+            <div class="max-w-3xl mb-16">
+              <h1 class="font-headline text-5xl md:text-6xl font-bold leading-tight tracking-tight mb-8 text-on-surface">
+                {invite.title}
+              </h1>
+              <p class="font-body text-lg text-on-surface-variant leading-relaxed whitespace-pre-line">
+                {invite.customFields?.get("bodyText")}
+              </p>
+            </div>
+
+            {/* Quick Details Bar */}
+            <div class="grid grid-cols-2 md:grid-cols-4 border-y border-border-surgical divide-y md:divide-y-0 md:divide-x divide-border-surgical mb-16">
+               <div class="p-6 md:px-8 bg-surface-container-lowest">
+                 <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest block mb-2">Date</span>
+                 <p class="font-body text-sm font-semibold">{invite.eventDate}</p>
+               </div>
+               <div class="p-6 md:px-8 bg-surface-container-lowest">
+                 <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest block mb-2">Time</span>
+                 <p class="font-body text-sm font-semibold">{invite.eventTime}</p>
+               </div>
+               <div class="p-6 md:px-8 bg-surface-container-lowest">
+                 <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest block mb-2">Dress Code</span>
+                 <p class="font-body text-sm font-semibold">{invite.dressCode}</p>
+               </div>
+               <div class="p-6 md:px-8 bg-surface-container-lowest">
+                 <span class="font-mono text-[10px] text-on-surface-variant uppercase tracking-widest block mb-2">Admittance</span>
+                 <p class="font-body text-sm font-semibold">{invite.customFields?.get("admittance") || 'By Invitation'}</p>
+               </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-24">
+                {/* Left: Agenda */}
+                {invite.customFields?.get("agenda") && (
+                  <div class="lg:col-span-7">
+                    <h3 class="font-headline text-2xl font-bold mb-8 flex items-center gap-4">
+                       Agenda <span class="h-px grow bg-border-surgical"></span>
+                    </h3>
+                    <div class="space-y-0">
+                       {(invite.customFields.get("agenda") as any[]).map((item: any) => (
+                         <div class="flex gap-6 py-6 border-b border-border-surgical">
+                            <span class="w-16 md:w-24 font-mono text-sm text-on-surface-variant shrink-0">{item.time}</span>
+                            <div>
+                               <h4 class="font-headline text-lg font-bold text-on-surface mb-1">{item.title}</h4>
+                               <p class="font-body text-sm text-on-surface-variant">{item.subtitle}</p>
+                            </div>
+                         </div>
+                       ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Right: Keynotes & Venue */}
+                <div class="lg:col-span-5 space-y-12">
+                   {invite.customFields?.get("speakers") && (
+                     <div>
+                        <h3 class="font-headline text-xl font-bold mb-6">Key Speakers</h3>
+                        <div class="space-y-4">
+                           {(invite.customFields.get("speakers") as any[]).map((speaker: any) => (
+                             <div class="flex items-center gap-4 bg-surface-container p-4 border border-border-surgical">
+                                <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 border border-border-surgical">
+                                   <img src={speaker.imageUrl} alt={speaker.name} class="w-full h-full object-cover grayscale" />
+                                </div>
+                                <div>
+                                   <h4 class="font-headline text-base font-bold text-on-surface">{speaker.name}</h4>
+                                   <p class="font-body text-xs text-on-surface-variant mt-1">{speaker.title}</p>
+                                </div>
+                             </div>
+                           ))}
+                        </div>
+                     </div>
+                   )}
+
+                   <div>
+                      <h3 class="font-headline text-xl font-bold mb-6">Venue</h3>
+                      <div class="border border-border-surgical p-6 bg-surface-container-lowest">
+                         <h4 class="font-headline text-base font-bold mb-2 text-on-surface">{invite.locationName}</h4>
+                         <p class="font-body text-sm text-on-surface-variant whitespace-pre-line">{invite.locationAddress}</p>
+                      </div>
+                   </div>
+                </div>
+            </div>
+
+            {/* Dynamic RSVP Form Widget */}
+            <div id="rsvpWidget" class="border border-border-surgical p-8 md:p-12 bg-surface-container-lowest max-w-2xl mx-auto">
+              <div id="rsvpFormContainer">
+                <h3 class="font-headline text-2xl font-bold mb-6 text-center">Event Confirmation</h3>
+                <form id="rsvpForm" class="space-y-6">
+                  <div>
+                    <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Corporate Representative Name</label>
+                    <input type="text" name="guestName" required placeholder="Representative Name" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-base text-on-background" />
+                  </div>
+                  
+                  <div class="grid grid-cols-2 gap-4">
+                    <div>
+                      <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Status</label>
+                      <select name="status" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-sm text-on-background">
+                        <option value="attending">Will Attend</option>
+                        <option value="declined">Unable to Attend</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Delegates Count</label>
+                      <input type="number" name="guestCount" value="1" min="1" class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-mono text-sm text-on-background" />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label class="font-mono text-[10px] uppercase tracking-widest text-on-surface-variant block mb-2">Dietary Requirements / Special Instructions</label>
+                    <textarea name="notes" placeholder="Notes for coordinators..." class="w-full bg-transparent border-b border-border-surgical focus:border-on-background outline-none py-2 font-body text-sm text-on-background resize-none h-12"></textarea>
+                  </div>
+
+                  <div id="rsvpError" class="text-xs text-red-500 font-mono hidden"></div>
+
+                  <button type="submit" class="w-full bg-on-surface text-background py-4 font-mono text-xs font-bold uppercase tracking-widest hover:opacity-90 transition-all cursor-pointer">
+                    Submit RSVP Status
+                  </button>
+                </form>
+              </div>
+              
+              <div id="rsvpSuccessContainer" class="hidden text-center py-8 space-y-4">
+                <Check className="w-12 h-12 text-on-background mx-auto" />
+                <h4 class="font-headline text-2xl font-bold">RSVP Confirmed</h4>
+                <p class="font-body text-sm text-on-surface-variant max-w-sm mx-auto">
+                  Thank you. Your confirmation details have been recorded in the summit database.
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  )}
+
+  <script define:vars={{ id }}>
+    const form = document.getElementById('rsvpForm');
+    const rsvpError = document.getElementById('rsvpError');
+    const rsvpFormContainer = document.getElementById('rsvpFormContainer');
+    const rsvpSuccessContainer = document.getElementById('rsvpSuccessContainer');
+
+    form?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      rsvpError.classList.add('hidden');
+      rsvpError.textContent = '';
+
+      const formData = new FormData(form);
+      const guestName = formData.get('guestName');
+      const status = formData.get('status');
+      const guestCount = Number(formData.get('guestCount'));
+      const notes = formData.get('notes');
+
+      try {
+        const response = await fetch(`/api/invites/${id}/rsvp`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ guestName, status, guestCount, notes }),
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+          throw new Error(data.error || 'Failed to submit response.');
+        }
+
+        // Show success screen
+        rsvpFormContainer.classList.add('hidden');
+        rsvpSuccessContainer.classList.remove('hidden');
+      } catch (err) {
+        rsvpError.textContent = err.message || 'Submission failed.';
+        rsvpError.classList.remove('hidden');
+      }
+    });
+  </script>
+</Layout>

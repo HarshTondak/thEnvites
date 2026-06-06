@@ -1,4 +1,8 @@
 ---
+import { getSession } from '../lib/auth';
+
+const session = getSession(Astro.cookies);
+
 const pathname = Astro.url.pathname.replace(/\/$/, "");
 const isActive = (path: string) => {
   const normalizedPath = path.replace(/\/$/, "");
@@ -11,26 +15,41 @@ const isActive = (path: string) => {
     <a href="/">thEnvites</a>
   </div>
   <nav class="hidden md:flex items-center gap-8">
-    <a
-      href="/"
-      class={`font-mono text-xs uppercase tracking-widest ${
-        isActive("/")
-          ? "text-on-surface font-bold border-b border-on-surface py-1"
-          : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
-      }`}
-    >
-      Home
-    </a>
-    <a
-      href="/about"
-      class={`font-mono text-xs uppercase tracking-widest ${
-        isActive("/about")
-          ? "text-on-surface font-bold border-b border-on-surface py-1"
-          : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
-      }`}
-    >
-      About
-    </a>
+    {!session ? (
+      <>
+        <a
+          href="/"
+          class={`font-mono text-xs uppercase tracking-widest ${
+            isActive("/")
+              ? "text-on-surface font-bold border-b border-on-surface py-1"
+              : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+          }`}
+        >
+          Home
+        </a>
+        <a
+          href="/about"
+          class={`font-mono text-xs uppercase tracking-widest ${
+            isActive("/about")
+              ? "text-on-surface font-bold border-b border-on-surface py-1"
+              : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+          }`}
+        >
+          About
+        </a>
+      </>
+    ) : (
+      <a
+        href="/dashboard"
+        class={`font-mono text-xs uppercase tracking-widest ${
+          isActive("/dashboard")
+            ? "text-on-surface font-bold border-b border-on-surface py-1"
+            : "text-on-surface-variant font-medium hover:text-on-surface transition-colors duration-200"
+        }`}
+      >
+        Dashboard
+      </a>
+    )}
     <a
       href="/contact"
       class={`font-mono text-xs uppercase tracking-widest ${
@@ -42,10 +61,34 @@ const isActive = (path: string) => {
       Contact
     </a>
   </nav>
-  <a
-    href="/contact"
-    class="bg-on-background text-background px-6 py-2 font-mono text-xs uppercase tracking-widest font-bold hover:bg-background hover:text-on-background border border-on-background transition-all duration-200 active:scale-95"
-  >
-    Get Started
-  </a>
+  
+  {session ? (
+    <button
+      id="headerLogoutBtn"
+      class="bg-on-background text-background px-6 py-2 font-mono text-xs uppercase tracking-widest font-bold hover:bg-background hover:text-on-background border border-on-background transition-all duration-200 active:scale-95 cursor-pointer"
+    >
+      Logout
+    </button>
+  ) : (
+    <a
+      href="/login"
+      class="bg-on-background text-background px-6 py-2 font-mono text-xs uppercase tracking-widest font-bold hover:bg-background hover:text-on-background border border-on-background transition-all duration-200 active:scale-95"
+    >
+      Get Started
+    </a>
+  )}
 </header>
+
+<script>
+  const logoutBtn = document.getElementById('headerLogoutBtn');
+  logoutBtn?.addEventListener('click', async () => {
+    try {
+      const res = await fetch('/api/auth/logout', { method: 'POST' });
+      if (res.ok) {
+        window.location.href = '/login';
+      }
+    } catch (err) {
+      console.error('Logout failed:', err);
+    }
+  });
+</script>
