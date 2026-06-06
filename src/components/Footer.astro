@@ -1,21 +1,16 @@
----
-const pathname = Astro.url.pathname.replace(/\/$/, "");
-const hideShowcase = pathname === "" || pathname === "/legal";
----
-
-<footer class="w-full px-5 md:px-margin-desktop py-24 grid grid-cols-1 md:grid-cols-3 gap-8 border-t border-border-surgical bg-background">
+<footer class="w-full px-5 md:px-margin-desktop py-24 grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-border-surgical bg-background">
   <div class="flex flex-col gap-6">
     <div class="font-headline text-2xl text-on-background font-bold tracking-tighter">
       thEnvites
     </div>
-    <p class="font-body text-sm text-on-surface-variant max-w-xs">
+    <p class="font-body text-sm text-on-surface-variant max-w-md">
       © 2024 thEnvites. Architectural Precision in Digital Invitations.
     </p>
   </div>
 
   <div class="grid grid-cols-2 gap-8 md:col-span-1">
     <div class="space-y-4">
-      <span class="font-mono text-xs text-on-surface-variant uppercase block mb-4 tracking-widest">
+      <span class="font-mono text-sm font-extrabold text-on-surface-variant uppercase block mb-4 tracking-widest">
         Navigation
       </span>
       <ul class="space-y-2">
@@ -43,18 +38,10 @@ const hideShowcase = pathname === "" || pathname === "/legal";
             About
           </a>
         </li>
-        <li>
-          <a
-            href="/faq"
-            class="font-mono text-xs text-on-surface-variant hover:text-on-surface transition-colors tracking-widest uppercase"
-          >
-            FAQ
-          </a>
-        </li>
       </ul>
     </div>
     <div class="space-y-4">
-      <span class="font-mono text-xs text-on-surface-variant uppercase block mb-4 tracking-widest">
+      <span class="font-mono text-sm font-extrabold text-on-surface-variant uppercase block mb-4 tracking-widest">
         Legal
       </span>
       <ul class="space-y-2">
@@ -63,15 +50,15 @@ const hideShowcase = pathname === "" || pathname === "/legal";
             href="/legal"
             class="font-mono text-xs text-on-surface-variant hover:text-on-surface transition-colors tracking-widest uppercase"
           >
-            Privacy
+            Privacy & Terms
           </a>
         </li>
         <li>
           <a
-            href="/legal"
+            href="/faq"
             class="font-mono text-xs text-on-surface-variant hover:text-on-surface transition-colors tracking-widest uppercase"
           >
-            Terms
+            FAQ
           </a>
         </li>
         <li>
@@ -85,24 +72,4 @@ const hideShowcase = pathname === "" || pathname === "/legal";
       </ul>
     </div>
   </div>
-
-  {!hideShowcase && (
-    <div class="flex flex-col gap-4">
-      <span class="font-mono text-xs text-on-background uppercase tracking-widest">
-        Visual Identity
-      </span>
-      <div class="w-full aspect-video bg-surface-container border border-border-surgical overflow-hidden relative group">
-        <img
-          src="https://lh3.googleusercontent.com/aida-public/AB6AXuAAQPJoA1aM4sXF-MWK0nJKFArUAZeczacI6e9XedNIhmurX7sJdyjIwPAs314zUPhvLBfqZ6qKsVbUVLaeYXDF-Mgiq9GYvI_QHafu7rI_g0DSwvkEECl51m84pFh3ZrdhXrDg82JwucRfLzYrLo7ChGSJyqlUkUpwrwUfrYooeS9UjbrH4cLWRPeUur75e3Nue0rln0_TkCkNsTKChGK45x5JfhaojNAL_e3wPqx3VmeqJavkwJIk9u3F2sCh2ue2zmfBT5NnUD_U"
-          alt="Editorial Excellence"
-          class="w-full h-full object-cover filter grayscale brightness-50 group-hover:scale-110 transition-transform duration-700"
-        />
-        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span class="font-mono text-[10px] uppercase tracking-[0.4em] text-white">
-            Editorial Excellence
-          </span>
-        </div>
-      </div>
-    </div>
-  )}
 </footer>

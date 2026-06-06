@@ -67,7 +67,7 @@ const invitesWithRsvps = await Promise.all(
     {/* Dashboard Header */}
     <div class="flex justify-center items-center gap-6 border-b border-border-surgical pb-12 mb-16">
         <h1 class="font-headline text-4xl md:text-5xl font-bold tracking-tight text-on-background">
-          Welcome back, {user.email}
+          Welcome back, {user.email.split('@')[0]}
         </h1>
     </div>
 
