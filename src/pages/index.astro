@@ -7,7 +7,7 @@ import { Building2, Zap, LayoutTemplate, ArrowRight } from 'lucide-react';
   <div class="flex flex-col">
     {/* Hero Section */}
     <section class="px-5 md:px-margin-desktop py-24 md:py-32 max-w-360 mx-auto w-full grid grid-cols-12">
-      <div class="col-span-12 md:col-span-10">
+      <div class="col-span-12 md:col-span-6 flex flex-col justify-start">
         <h1 class="font-headline text-5xl md:text-[80px] font-bold leading-[1.1] mb-8 tracking-[-0.04em]">
           Digital invitations, <br />
           <span class="text-on-surface-variant">engineered to elevate.</span>
@@ -23,6 +23,13 @@ import { Building2, Zap, LayoutTemplate, ArrowRight } from 'lucide-react';
             Create an Envite
           </a>
         </div>
+      </div>
+      <div class="hidden md:flex md:col-span-6 items-center justify-end">
+        <img
+        class="w-[70%] object-contain"
+        src="/assets/hero.png"
+        alt="Abstract Architecture and Precision Design element representing high-quality digital invitations and premium web design."
+      />
       </div>
     </section>
 
